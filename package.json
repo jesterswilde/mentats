@@ -1,10 +1,10 @@
 {
   "name": "mentats",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A simple state solution. Currently only for React / Preact",
-  "main": "./dist/src/index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "build": "babel -d ./dist",
+    "build": "babel ./src --out-dir ./dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -15,14 +15,20 @@
   "peerDependencies": {
     "react": "^15.6.1"
   },
-  "babel":{
-    "presets": ["es2015","react"],
-    "plugins": ["transform-object-rest-spread"]
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ],
+    "plugins": [
+      "transform-object-rest-spread"
+    ]
   },
   "author": "Corey Wolff",
   "license": "ISC",
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1"
   }
 }
