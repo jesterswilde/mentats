@@ -1,6 +1,6 @@
 {
   "name": "mentats",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A simple state solution. Currently only for React / Preact",
   "main": "./dist/index.js",
   "scripts": {

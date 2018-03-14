@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.addSetMethodsWithState = exports.addMergeMethodsWithState = exports.wrapSetAppState = exports.wrapMergeAppState = exports.setAppState = exports.mergeAppState = exports.bindApp = exports.appStateToProps = exports.methodsToProps = undefined;
+exports.addSetMethodsWithState = exports.addMergeMethodsWithState = exports.wrapSetAppState = exports.wrapMergeAppState = exports.setAppState = exports.mergeAppState = exports.bindApp = exports.stateToProps = exports.methodsToProps = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -38,7 +38,7 @@ var methodsToProps = exports.methodsToProps = function methodsToProps(Comp) {
 		return _react2.default.createElement(Comp, modProps);
 	};
 };
-var appStateToProps = exports.appStateToProps = function appStateToProps(Comp) {
+var stateToProps = exports.stateToProps = function stateToProps(Comp) {
 	return function (props) {
 		var modProps = _extends({}, _state.state, props);
 		return _react2.default.createElement(Comp, modProps);
