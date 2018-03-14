@@ -34,7 +34,7 @@ export const methodsToProps = (Comp)=>{
 		return <Comp { ...modProps } />;
 	};
 };
-export const appStateToProps = (Comp)=>{
+export const stateToProps = (Comp)=>{
 	return (props)=> {
 		const modProps = {
 			...state,
