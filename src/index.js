@@ -5,7 +5,7 @@ import dataToProps,  { methodsToProps, stateToProps,
 	addAppMethods } from './methods';
 
 
-	export default appDataToProps;
+	export default dataToProps;
 
 	export {
 		methodsToProps, 

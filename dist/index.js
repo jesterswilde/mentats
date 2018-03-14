@@ -11,7 +11,7 @@ var _methods2 = _interopRequireDefault(_methods);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = appDataToProps;
+exports.default = _methods2.default;
 exports.methodsToProps = _methods.methodsToProps;
 exports.stateToProps = _methods.stateToProps;
 exports.bindApp = _methods.bindApp;
