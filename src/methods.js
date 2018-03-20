@@ -49,10 +49,13 @@ export const bindApp = (theApp)=> {
 	updateReact(); 
 };
 
-export const mergeAppState = (newState, ...publishKeys)=>{
-	publishKeys.forEach((key)=> publishFor(key, sta))
+export const mergeAppState = (newState)=>{
 	mergeState(newState); 
 	updateReact(); 
+}
+
+export const asyncMergeAppState = async(newState)=>{
+
 }
 
 export const setAppState = (newState)=>{
@@ -73,10 +76,10 @@ export const wrapSetAppState = (newMethods)=>{
 		return accObj; 
 	}, {});
 }
-
+2
 const addAppMethods = (newMethods)=> {
 	addMethods(newMethods); 
-	updateReact(); 
+	updateReact();
 };
 
 const wrapMethod = (method, mergeMethods = ()=>{} )=>{
@@ -89,6 +92,29 @@ export const addMergeMethodsWithState = (newMethods)=> {
 	const wrappedMethods = wrapMergeAppState(newMethods); 
 	addAppMethods(wrappedMethods); 
 	updateReact(); 
+};
+
+export const asyncMergeMethodsWithState = (newMethods)=>{
+	reduce(newMethods, (accObj, method, key)=>{
+		accObj[key] = async(...args)=>{
+			const nextState = await method(state, ...args);
+			mergeAppState(nextState); 
+			updateReact(); 
+		}
+		return accObj;
+	}, {})
+};
+
+
+export const asyncSetMethodsWithState = (newMethods)=>{
+	reduce(newMethods, (accObj, method, key)=>{
+		accObj[key] = async(...args)=>{
+			const nextState = await method(state, ...args);
+			setAppState(nextState); 
+			updateReact(); 
+		}
+		return accObj;
+	}, {})
 };
 
 export const addSetMethodsWithState = (newMethods)=>{

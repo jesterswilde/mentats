@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.addSetMethodsWithState = exports.addMergeMethodsWithState = exports.wrapSetAppState = exports.wrapMergeAppState = exports.setAppState = exports.mergeAppState = exports.bindApp = exports.stateToProps = exports.methodsToProps = undefined;
+exports.addSetMethodsWithState = exports.asyncSetMethodsWithState = exports.asyncMergeMethodsWithState = exports.addMergeMethodsWithState = exports.wrapSetAppState = exports.wrapMergeAppState = exports.setAppState = exports.asyncMergeAppState = exports.mergeAppState = exports.bindApp = exports.stateToProps = exports.methodsToProps = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -51,16 +51,11 @@ var bindApp = exports.bindApp = function bindApp(theApp) {
 };
 
 var mergeAppState = exports.mergeAppState = function mergeAppState(newState) {
-	for (var _len = arguments.length, publishKeys = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-		publishKeys[_key - 1] = arguments[_key];
-	}
-
-	publishKeys.forEach(function (key) {
-		return (0, _listeners.publishFor)(key, sta);
-	});
 	(0, _state.mergeState)(newState);
 	updateReact();
 };
+
+var asyncMergeAppState = exports.asyncMergeAppState = async function asyncMergeAppState(newState) {};
 
 var setAppState = exports.setAppState = function setAppState(newState) {
 	(0, _state.setState)(newState);
@@ -80,7 +75,7 @@ var wrapSetAppState = exports.wrapSetAppState = function wrapSetAppState(newMeth
 		return accObj;
 	}, {});
 };
-
+2;
 var addAppMethods = function addAppMethods(newMethods) {
 	(0, _state.addMethods)(newMethods);
 	updateReact();
@@ -90,8 +85,8 @@ var wrapMethod = function wrapMethod(method) {
 	var mergeMethods = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
 
 	return function () {
-		for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-			args[_key2] = arguments[_key2];
+		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+			args[_key] = arguments[_key];
 		}
 
 		mergeMethods(method.apply(undefined, [_state.state].concat(args)));
@@ -102,6 +97,36 @@ var addMergeMethodsWithState = exports.addMergeMethodsWithState = function addMe
 	var wrappedMethods = wrapMergeAppState(newMethods);
 	addAppMethods(wrappedMethods);
 	updateReact();
+};
+
+var asyncMergeMethodsWithState = exports.asyncMergeMethodsWithState = function asyncMergeMethodsWithState(newMethods) {
+	(0, _util.reduce)(newMethods, function (accObj, method, key) {
+		accObj[key] = async function () {
+			for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+				args[_key2] = arguments[_key2];
+			}
+
+			var nextState = await method.apply(undefined, [_state.state].concat(args));
+			mergeAppState(nextState);
+			updateReact();
+		};
+		return accObj;
+	}, {});
+};
+
+var asyncSetMethodsWithState = exports.asyncSetMethodsWithState = function asyncSetMethodsWithState(newMethods) {
+	(0, _util.reduce)(newMethods, function (accObj, method, key) {
+		accObj[key] = async function () {
+			for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+				args[_key3] = arguments[_key3];
+			}
+
+			var nextState = await method.apply(undefined, [_state.state].concat(args));
+			setAppState(nextState);
+			updateReact();
+		};
+		return accObj;
+	}, {});
 };
 
 var addSetMethodsWithState = exports.addSetMethodsWithState = function addSetMethodsWithState(newMethods) {
